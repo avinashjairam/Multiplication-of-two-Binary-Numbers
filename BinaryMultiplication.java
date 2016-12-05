@@ -2,10 +2,10 @@ import java.util.*;
 
 class BinaryNumber{
 
-	ArrayList<Integer>number
+	ArrayList<Integer>number;
 
 	BinaryNumber(int [] number){
-		this.number = Arrays.copyOf(number, number.length);
+//		this.number = Arrays.copyOf(number, number.length);
 	}
 
 
@@ -19,9 +19,13 @@ public class BinaryMultiplication{
 
 	ArrayList<BinaryNumber> binaryNumbers = new ArrayList<BinaryNumber>();
 	ArrayList<Integer> additionNumbers = new ArrayList<Integer>();
+	ArrayList<ArrayList<Integer>> listOfLists = new ArrayList<ArrayList<Integer>>();
+	ArrayList<Integer>additionResult = new ArrayList<Integer>();
 
 	int [] num1;
 	int [] num2;
+
+	
 
 	String num1AsString, num2AsString;
 	
@@ -38,29 +42,111 @@ public class BinaryMultiplication{
 			this.num1 = Arrays.copyOf(num2, num2.length);
 			this.num2 = Arrays.copyOf(num1, num1.length);
 		}
-
 	}
+
+
+	public static void main(String [] args){
+		
+		int [] num1 = new int [] {1,0,1,1,0,1};
+		int [] num2 = new int [] {1,1,0,1};
+		
+	//	totalBits = num1.length * num2.length;
+
+		BinaryMultiplication obj = new BinaryMultiplication(num1,num2);
+		obj.multiply();
+		obj.addition();
+	}	
+
+	public String addTwoBits(int x, int y){
+		String returnValue="";
+		if(x == 0 && y == 0){
+			
+			returnValue ="0";
+		}
+		else if( x == 1 && y == 0){
+			returnValue = "1";
+		}
+		else if(x == 0 && y == 1){
+			returnValue =  "1";
+		}
+		else if(x == 1 && y ==1){
+			returnValue = "10";
+		}
+//		System.out.println(returnValue.charAt(0));
+
+		return returnValue;
+	}
+
+	public void addition(){
+//		for(int i =0; i < listOfLists.size(); i++){
+//			System.out.println(listOfLists.get(i));
+//		}
+
+		addTwoBinaryNumbers(listOfLists.get(0),listOfLists.get(2));
+	}
+
+	public void addTwoBinaryNumbers(ArrayList<Integer>num1, ArrayList<Integer>num2){
+		ArrayList<String> sum = new ArrayList<String>();
+		String result="";
+		ArrayList<Integer>carry = new ArrayList<Integer>();
+	
+		for(int i =0; i<num1.size(); i++){
+			result=addTwoBits(num1.get(i),num2.get(i));
+			if(result.length() == 2){
+				result = result.charAt(1);
+				carry.add(Integer.parseInt(result.charAt(0)));				
+			}
+			else{
+				sum.add(result);
+			}
+
+		}
+	
+		System.out.print("sum is " +sum);	
+		
+	}
+
+
+	public void paddedZeros(ArrayList<Integer>list, int x, int y){
+		int numZerosToAdd = (x+y) - list.size() -1; 
+
+		for(int i =0; i < numZerosToAdd; i++){
+			list.add(0);
+		}
+	}		
+
 
 	public void multiply(){
 		for (int i=num1.length-1; i >=0;i--){
-			additionNumbers.clear();
-
+	//		additionNumbers.clear();
+			resetAdditionNumbers();
 			addZeros(num1.length -1 -i);
 			
 			for(int j=num2.length-1; j >= 0; j--){
 				additionNumbers.add(num1[i]*num2[j]);
 			//	System.out.print(num1[i]  * num2[j] + " ");
 			}
-//			System.out.println(additionNumbers);
+//		
+			System.out.println(additionNumbers);
+			paddedZeros(additionNumbers,num1.length,num2.length);
 			Collections.reverse(additionNumbers);
 			this.listOfLists.add(additionNumbers);
 			System.out.println(additionNumbers);
 			System.out.println();
 			//System.out.println(listOfLists);
 		}
-		System.out.println(listOfLists);
+		System.out.println("list of lists " + listOfLists);
 
 	
+	}
+
+
+
+	public void resetAdditionNumbers(){
+		additionNumbers = null;
+		additionNumbers = new ArrayList<Integer>();
+	
+
 	}
 
 	//The addZeros() method add the appropriate number of zeros to the addition sequence 
@@ -103,103 +189,6 @@ public class BinaryMultiplication{
 	}
 
 
-	public int getNumberOfDecimalPlaces(){
 
-		
-
-		return 0;
-	}
-
-	public static void main(String [] args){
-		
-		int [] num1 = new int [] {1,0,1,1,0,1};
-		int [] num2 = new int [] {1,1,0,1};
-
-		BinaryMultiplication obj = new BinaryMultiplication(num1,num2);
-		obj.multiply();
-		//obj.printListOfLists();
-	}	
-
-	/*double num1 = 1011.01;
-	double num2 = 110.1; 
-
-	int numberOfDecimalPlaces;
-
-	boolean decimalOperation = false;
-
-	String smallerNumber,largerNumber;;
-		
-	int num1Length, num2Length,totalLength;
-
-
-	int [][] values; 
-
-	String num1AsString = Double.toString(num1);
-	String num2AsString = Double.toString(num2);
-
-	num1Length = num1AsString.length();
-	num2Length = num2AsString.length();
-	totalLength = num1Length + num2Length;
-
-	
-
-	if(num1AsString.contains(".") || num2AsString.contains(".")){
-		decimalOperation = true;
-	}
-
-	if(num1Length < num2Length){
-		smallerNumber = num1AsString;
-		largerNumber = num2AsString;
-	}
-	else{
-		smallerNumber = num2AsString;
-		largerNumber = num1AsString;
-	}
-
-	values = new int [smallerNumber.length()][totalLength];
-
-	initializeArray(values,smallerNumber.length(),totalLength);
-
-	System.out.println (num1 + " length is " + num1Length);
-	System.out.println (num2 + " length is " + num2Length);
-
-
-	multiply(smallerNumber, largerNumber, values, decimalOperation);
-
-	}
-
-	public static void initializeArray(int [][] values, int numRows , int numColumns){
-		for (int i =0; i < numRows; i++){
-			for (int j=0; j < numColumns; j++){
-				values[i][j]=0;
-				System.out.print(values[i][j]);
-			}
-			System.out.println();
-		}
-	}
-
-	public static double multiply(String smallerNumber, String largerNumber, int [][] values, boolean decimalOperation){
-
-		if(decimalOperation){
-			for(int i = smallerNumber.length()-1; i >= 0; i--){
-				if(smallerNumber.charAt(i) == '.' ){
-					continue;
-				}
-			//	System.out.print(smallerNumber.charAt(i));
-
-				for (int j = largerNumber.length()-1; j >= 0; j--){
-					if(largerNumber.charAt(i) != '.' ){
-						System.out.print("i=" + smallerNumber.charAt(i) + "*" + "j=" + largerNumber.charAt(j) + " ");
-					}
-			
-		//			System.out.print( largerNumber.charAt(i));
-				}
-				System.out.println("end");
-			}
-		}
-
-		return 0;
-	}
-*/
 
 }
