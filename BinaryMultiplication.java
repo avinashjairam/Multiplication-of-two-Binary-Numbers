@@ -21,6 +21,8 @@ public class BinaryMultiplication{
 	ArrayList<Integer> additionNumbers = new ArrayList<Integer>();
 	ArrayList<ArrayList<Integer>> listOfLists = new ArrayList<ArrayList<Integer>>();
 	ArrayList<Integer>additionResult = new ArrayList<Integer>();
+	
+	ArrayList<Integer>sum = new ArrayList<Integer>();
 
 	int [] num1;
 	int [] num2;
@@ -88,13 +90,25 @@ public class BinaryMultiplication{
 //			System.out.println(listOfLists.get(i));
 //		}
 
-		addTwoBinaryNumbers(listOfLists.get(0),listOfLists.get(2));
+//		int [] sum;
+
+		 addTwoBinaryNumbers(listOfLists.get(0),listOfLists.get(1));
+	
+	//	ArrayList<Integer> partialSum = Arrays.asList(sum); 
+		for(int i =2; i < listOfLists.size(); i++){
+			addTwoBinaryNumbers(listOfLists.get(i),sum);
+			
+		}
 	}
 
 	public void addTwoBinaryNumbers(ArrayList<Integer>num1, ArrayList<Integer>num2){
-		ArrayList<String> sum = new ArrayList<String>();
+		sum=null;
+		 sum = new ArrayList<Integer>();
 		String result="";
 		ArrayList<Integer>carry = new ArrayList<Integer>();
+
+		System.out.println("\nNow working on " + num1 + " " + num2);
+		System.out.println();
 	
 		for(int i =num1.size()-1; i>=0; i--){
 			result=addTwoBits(num1.get(i),num2.get(i));
@@ -116,19 +130,30 @@ public class BinaryMultiplication{
 				carry.add(Integer.parseInt(result.substring(0,1)));
 				result = Character.toString(result.charAt(1));
 				System.out.println(carry);			
-				sum.add(result);
+				sum.add(Integer.parseInt(result));
 				
 			}
 			else{
-				sum.add(result);
+				sum.add(Integer.parseInt(result));
 			}
 
 			result="";
+
+			if(i==0 && carry.size()!=0){
+				for(int j = 0; j < carry.size(); j++){
+					sum.add(carry.get(j));
+				}
+
+			}
 
 		}
 		Collections.reverse(sum);	
 		System.out.print("sum is " +sum + " carry is " + carry);	
 		
+		/*int [] sum1 =  new int [sum.size()];
+		sum1 = sum.toArray(sum1);
+
+		return sum1;*/
 	}
 
 
