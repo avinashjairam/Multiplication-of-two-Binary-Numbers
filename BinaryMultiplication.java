@@ -59,11 +59,11 @@ public class BinaryMultiplication{
 
 	public String addTwoBits(int x, int y){
 		String returnValue="";
+		System.out.println("x is " + x + " y is " +y);	
 		if(x == 0 && y == 0){
-			
 			returnValue ="0";
 		}
-		else if( x == 1 && y == 0){
+		else if(x == 1 && y == 0){
 			returnValue = "1";
 		}
 		else if(x == 0 && y == 1){
@@ -72,7 +72,13 @@ public class BinaryMultiplication{
 		else if(x == 1 && y ==1){
 			returnValue = "10";
 		}
-//		System.out.println(returnValue.charAt(0));
+		else if(x == 1 && y == 10){
+			returnValue = "11";
+		}
+		else if(x == 10 && y == 1){
+			returnValue = "11";
+		}
+		System.out.println("return value is " + returnValue);
 
 		return returnValue;
 	}
@@ -90,19 +96,38 @@ public class BinaryMultiplication{
 		String result="";
 		ArrayList<Integer>carry = new ArrayList<Integer>();
 	
-		for(int i =0; i<num1.size(); i++){
+		for(int i =num1.size()-1; i>=0; i--){
 			result=addTwoBits(num1.get(i),num2.get(i));
+			System.out.println("Initial Result is " + result);
+			
+			if(carry.size() != 0){
+				System.out.println("Carry loaded: " + carry.get(carry.size()-1) + " result is " + result);
+				result=addTwoBits(Integer.parseInt(result),carry.get(carry.size()-1));
+				System.out.println("result after carry " + result);
+				carry.remove(carry.size()-1);
+			
+
+			}
+
+			System.out.println("i = " + i + " result is " + result + " carry is " + carry + " result length is " + result.length());
+
+
 			if(result.length() == 2){
-				result = result.charAt(1);
-				carry.add(Integer.parseInt(result.charAt(0)));				
+				carry.add(Integer.parseInt(result.substring(0,1)));
+				result = Character.toString(result.charAt(1));
+				System.out.println(carry);			
+				sum.add(result);
+				
 			}
 			else{
 				sum.add(result);
 			}
 
+			result="";
+
 		}
-	
-		System.out.print("sum is " +sum);	
+		Collections.reverse(sum);	
+		System.out.print("sum is " +sum + " carry is " + carry);	
 		
 	}
 
