@@ -14,7 +14,7 @@ class BinaryNumber{
 }
 
 public class BinaryMultiplication{
-
+/*
 	int numberOfDecimalPlaces=0;
 
 	ArrayList<BinaryNumber> binaryNumbers = new ArrayList<BinaryNumber>();
@@ -32,9 +32,33 @@ public class BinaryMultiplication{
 	
 
 	String num1AsString, num2AsString;
+*/
+
+	/*New Design Starts here */
+	ArrayList<Integer>num1 = new ArrayList<Integer>();
+	ArrayList<Integer>num2 = new ArrayList<Integer>(); 
+
+
 
 	public static void main(String [] args){
+
+		int firstBinaryNumber, secondBinaryNumber;
+		Scanner stdin = new Scanner(System.in);
+
+		System.out.println("Enter the first number");
+		firstBinaryNumber = stdin.nextInt();
+
+		System.out.println("Enter the second number");
+		secondBinaryNumber = stdin.nextInt();
+
+
+		System.out.println("Number 1 in binary is: " + Integer.toBinaryString(firstBinaryNumber));
+		System.out.println("Number 2 in binary is: " + Integer.toBinaryString(secondBinaryNumber));
 		
+
+		
+
+
 	//	int [] num1 = new int [] {1,0,1,1,0,1};
 	//	int [] num2 = new int [] {1,1,0,1};
 	
@@ -42,15 +66,16 @@ public class BinaryMultiplication{
 //		int [] num2 = new int [] {1,1,1,1};
 
 	
-		int [] num1 = new int [] {1,1};
-		int [] num2 = new int [] {1,1};
+//		int [] num1 = new int [] {1,1};
+//		int [] num2 = new int [] {1,1};
 
 	//	totalBits = num1.length * num2.length;
 
-		BinaryMultiplication obj = new BinaryMultiplication(num1,num2);
-		obj.multiply();
+		BinaryMultiplication obj = new BinaryMultiplication() ;
+		obj.addUserInputToArrayList(Integer.toBinaryString(firstBinaryNumber),Integer.toBinaryString(secondBinaryNumber));
+	/*	obj.multiply();
 		obj.addition();
-		System.out.println("regular mulitiplication #steps " + obj.count1);
+		System.out.println("regular mulitiplication #steps " + obj.count1);*/
 /*
 		ArrayList<Integer>number1 = new ArrayList<Integer>();
 		ArrayList<Integer>number2 = new ArrayList<Integer>();
@@ -68,6 +93,22 @@ public class BinaryMultiplication{
 		System.out.println("divide and conquer #steps: " + obj.count2); */
 
 	}
+
+
+	public void addUserInputToArrayList(String binary1, String binary2){
+		for(int i = 0; i < binary1.length(); i++){
+			num1.add(Character.getNumericValue(binary1.charAt(i)));
+		}
+
+		for(int j = 0; j < binary2.length(); j++){
+			num2.add(Character.getNumericValue(binary2.charAt(j)));
+		}
+
+		System.out.println(num1 + " " + num2);
+
+	}
+}
+/*
 
 	public int divideAndConquer(ArrayList<Integer>num1, ArrayList<Integer>num2){
 		count2++;
@@ -276,7 +317,7 @@ public class BinaryMultiplication{
 		/*int [] sum1 =  new int [sum.size()];
 		sum1 = sum.toArray(sum1);
 
-		return sum1;*/
+		return sum1;
 	}
 
 
@@ -350,7 +391,7 @@ public class BinaryMultiplication{
 				System.out.println(x);
 			}
 		}
-*/
+
 		
 		for(int i=0;i<listOfLists.size();i++){
 		//	for(int j=0; j <listOfLists.get(i).size(); j++){
@@ -365,4 +406,4 @@ public class BinaryMultiplication{
 
 
 
-}
+}*/
